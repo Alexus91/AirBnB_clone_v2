@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
+# setup web static server
 
-# setup web static
-sudo apt-get -y update
-sudo apt-get -y install nginx
-
+apt-get update
+apt-get install -y nginx
 mkdir -p /data/web_static/releases/test/
-mkdir -p /data/web_static/shared/
-
+mkdir -p /data/web_static/shared
 echo "<!DOCTYPE html>
 <html>
   <head>
@@ -21,4 +19,3 @@ config='\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;}'
 sed -i "38i $config" /etc/nginx/sites-available/default
 service nginx restart
 exit 0
-
