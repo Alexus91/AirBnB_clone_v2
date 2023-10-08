@@ -5,11 +5,12 @@ from fabric.api import local
 from fabric.operations import run, put, sudo
 import os.path
 from fabric.api import env
+
 env.hosts = ['34.207.120.94', '52.87.19.84']
 
 
 def do_deploy(archive_path):
-    if (os.path.isfile(archive_path) is False):
+    if not os.path.isfile(archive_path):
         return False
 
     try:
@@ -24,6 +25,6 @@ def do_deploy(archive_path):
         run("sudo rm -rf /data/web_static/current")
         run("sudo ln -s {} /data/web_static/current".format(ndir))
         return True
-    except:
+    except Exception as e:
+        print("Exception:", str(e))
         return False
-
