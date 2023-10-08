@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Script that distributes an archive to your web servers using do_deploy"""
+""" distributes an archive to your web servers using do_deploy"""
 
 from fabric.api import local
 from fabric.operations import run, put, sudo
