@@ -10,6 +10,8 @@ env.hosts = ['34.207.120.94', '52.87.19.84']
 
 
 def do_deploy(archive_path):
+    """Archive distributor"""
+
     if not os.path.isfile(archive_path):
         return False
 
