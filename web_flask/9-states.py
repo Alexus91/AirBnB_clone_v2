@@ -1,34 +1,34 @@
 #!/usr/bin/python3
-"""Starts a Flask web application.
-The application listens on 0.0.0.0, port 5000."""
-from models import storage
-from flask import Flask
-from flask import render_template
+"""starts a Flask web application"""
 
-app = Flask(__name__)
+from flask import Flask, render_template
+import models
 
-
-@app.route("/states", strict_slashes=False)
-def states():
-    """Displays an HTML page"""
-    states = storage.all("State")
-    return render_template("9-states.html", state=states)
-
-
-@app.route("/states/<id>", strict_slashes=False)
-def states_id(id):
-    """Displays an HTML """
-    for state in storage.all("State").values():
-        if state.id == id:
-            return render_template("9-states.html", state=state)
-    return render_template("9-states.html")
+app = Flask("__name__")
 
 
 @app.teardown_appcontext
-def teardown(exc):
-    """Remove the current SQLAlchemy session."""
-    storage.close()
+def refresh(exception):
+        models.storage.close()
+
+
+@app.route('/states/<id>', strict_slashes=False)
+def state_cities(id):
+    state = storage.get(State, id)
+    if state:
+        return render_template('9-states.html', state=state)
+    else:
+        return render_template('9-states.html', not_found=True)
+
+
+
+@app.route("/states/<id>", strict_slashes=False)
+def route_city():
+        pep_fix = models.dummy_classes["State"]
+        data = models.storage.all(cls=pep_fix)
+        states = data.values()
+        return render_template('8-cities_by_states.html', states_list=states)
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+        app.run()
